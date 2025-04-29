@@ -10,6 +10,22 @@ jobs:
   test:
     runs-on: ubuntu-latest
     
+    services:
+      mysql:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: testdb
+          MYSQL_USER: testuser
+          MYSQL_PASSWORD: testpassword
+
     steps:
     - uses: actions/checkout@v3
     
@@ -28,7 +44,24 @@ jobs:
         cd server
         chmod +x ./node_modules/.bin/jest
 
+    - name: Wait for MySQL to be ready
+      run: |
+        for i in {1..30}; do
+          if mysqladmin ping -h 127.0.0.1 --silent; then
+            echo "MySQL is ready!"
+            break
+          fi
+          echo "Waiting for MySQL..."
+          sleep 1
+        done
+
     - name: Run server tests
+      env:
+        DB_HOST: 127.0.0.1
+        DB_PORT: 3306
+        DB_USER: testuser
+        DB_PASSWORD: testpassword
+        DB_DATABASE: testdb
       run: |
         cd server
         npm test
