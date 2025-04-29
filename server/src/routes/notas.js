@@ -1,6 +1,7 @@
 import Router from "@koa/router"
 import { NotasController } from "../controllers/notas.controller.js"
 
+
 const router = new Router({
   prefix: "/api/notas",
 })
