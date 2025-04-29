@@ -8,7 +8,7 @@ describe("API de Notas", () => {
 
   // Prueba para crear una nota
   test("Debería crear una nueva nota", async () => {
-    const res = await request(app).post("/api/notas").send({
+    const res = await request(app.callback()).post("/api/notas").send({
       titulo: "Nota de prueba",
       contenido: "Contenido de prueba",
       color: "#f0f0f0",
