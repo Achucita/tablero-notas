@@ -23,6 +23,11 @@ jobs:
         cd server
         npm install
         
+    - name: Fix Jest Permission Issues
+      run: |
+        cd server
+        chmod +x ./node_modules/.bin/jest
+
     - name: Run server tests
       run: |
         cd server
