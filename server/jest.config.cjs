@@ -1,7 +1,10 @@
 module.exports = {
   testEnvironment: 'node',
   transform: {
-    '^.+\\.js$': 'babel-jest',
+    '^.+\\.jsx?$': [
+      'babel-jest',
+      { configFile: './babel.config.cjs', babelrc: false },
+    ],
   },
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
