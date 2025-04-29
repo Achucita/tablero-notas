@@ -1,0 +1,50 @@
+.aviso-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-left: 4px solid var(--primary-color);
+}
+
+.aviso-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.aviso-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 10px;
+}
+
+.aviso-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--dark-color);
+  word-break: break-word;
+}
+
+.aviso-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.aviso-body {
+  flex: 1;
+  margin-bottom: 15px;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.aviso-footer {
+  font-size: 0.8rem;
+  color: #666;
+  text-align: right;
+}

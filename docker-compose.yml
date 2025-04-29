@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: tablero_notas_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: tablero_notas
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app_network
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: tablero_notas_server
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      - PORT=3001
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - DB_NAME=tablero_notas
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    networks:
+      - app_network
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: tablero_notas_client
+    restart: always
+    depends_on:
+      - server
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
